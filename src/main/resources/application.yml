@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: bookstore
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bookstore
+    username: root
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
