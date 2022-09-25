@@ -4,6 +4,7 @@ import com.bookstore.backend.dao.OrderItemDao;
 import com.bookstore.backend.entity.OrderItem;
 import com.bookstore.backend.repository.OrderItemRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,17 +18,14 @@ public class OrderItemDaoImpl implements OrderItemDao {
     private OrderItemRepository orderItemRepository;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public void addOne(OrderItem orderItem) {
         orderItemRepository.save(orderItem);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
     public void addList(List<OrderItem> orderItems) {
-        for (OrderItem orderItem : orderItems) {
-            orderItemRepository.mySaveOne(orderItem);
-        }
+        orderItemRepository.saveAll(orderItems);
 //        int error = 10 / 0;
     }
 }

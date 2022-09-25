@@ -4,6 +4,7 @@ import com.bookstore.backend.dao.OrderDao;
 import com.bookstore.backend.entity.Order;
 import com.bookstore.backend.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +23,10 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Integer addOne(Order order) {
-        Integer result = orderRepository.mySaveOne(order);
-
+    @Transactional
+    public Order addOne(Order order) {
 //        int error = 10 / 0;
-        return result;
+        return orderRepository.save(order);
     }
 
     @Override

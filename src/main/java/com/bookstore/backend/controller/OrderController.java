@@ -24,7 +24,9 @@ public class OrderController {
 
     @PostMapping("/create")
     public OrderStatus createOrder(@RequestBody List<Long> bookIds) {
-        Long userId = getUserId();
+//        便于测试
+//        Long userId = getUserId();
+        Long userId = 6L;
         return orderService.createOrder(bookIds, userId);
     }
 

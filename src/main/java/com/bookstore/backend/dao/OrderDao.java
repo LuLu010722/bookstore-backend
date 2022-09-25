@@ -9,7 +9,7 @@ public interface OrderDao {
 
     Order findOne(Long id);
 
-    Integer addOne(Order order);
+    Order addOne(Order order);
 
     List<Order> findAll();
 

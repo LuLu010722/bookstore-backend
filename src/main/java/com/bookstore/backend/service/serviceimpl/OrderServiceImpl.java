@@ -11,6 +11,7 @@ import com.bookstore.backend.entity.OrderItem;
 import com.bookstore.backend.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -80,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
         orderDao.addOne(order);
 
 //      create error before part 2
-//        int error = 10 / 0;
+        int error = 10 / 0;
 
         // second part
         List<OrderItem> orderItems = new ArrayList<>();
@@ -104,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
         orderItemDao.addList(orderItems);
 
 //      create error after part 2
-        int error = 10 / 0;
+//        int error = 10 / 0;
 
         return OrderStatus.ORDER_ALL_OK;
     }
