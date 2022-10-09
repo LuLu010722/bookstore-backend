@@ -6,7 +6,7 @@ import com.bookstore.backend.entity.Order;
 import java.util.List;
 
 public interface OrderService {
-    OrderStatus createOrder(List<Long> bookIds, Long userId);
+    OrderStatus createOrder(List<Long> bookIds, Long userId) throws Exception;
 
     List<Order> getOrders(Long userId);
 

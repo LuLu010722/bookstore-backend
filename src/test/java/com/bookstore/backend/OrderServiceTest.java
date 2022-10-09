@@ -24,6 +24,10 @@ public class OrderServiceTest {
         bookIds.add(1L);
         bookIds.add(2L);
         bookIds.add(3L);
-        orderService.createOrder(bookIds, 1L);
+        try {
+            orderService.createOrder(bookIds, 1L);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

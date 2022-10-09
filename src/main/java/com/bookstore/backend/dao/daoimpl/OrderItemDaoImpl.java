@@ -4,7 +4,6 @@ import com.bookstore.backend.dao.OrderItemDao;
 import com.bookstore.backend.entity.OrderItem;
 import com.bookstore.backend.repository.OrderItemRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addList(List<OrderItem> orderItems) {
         orderItemRepository.saveAll(orderItems);
 //        int error = 10 / 0;

@@ -11,7 +11,6 @@ import com.bookstore.backend.entity.OrderItem;
 import com.bookstore.backend.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -72,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderStatus createOrder(List<Long> bookIds, Long userId) {
+    public OrderStatus createOrder(List<Long> bookIds, Long userId) throws Exception {
 
         // first part
         Order order = new Order();
@@ -80,16 +79,13 @@ public class OrderServiceImpl implements OrderService {
         // this method includes transaction
         orderDao.addOne(order);
 
-//      create error before part 2
-        int error = 10 / 0;
-
         // second part
         List<OrderItem> orderItems = new ArrayList<>();
         for (Long bookId : bookIds) {
             Book book = bookDao.findOne(bookId);
             if (book.getRemaining() == 0) {
                 log.error(book.getTitle() + "已经售罄！");
-                return OrderStatus.ERROR;
+                throw new Exception("图书库存不足");
             }
 
             OrderItem orderItem = new OrderItem();
@@ -101,11 +97,12 @@ public class OrderServiceImpl implements OrderService {
             orderItems.add(orderItem);
         }
 
-//      this method includes transaction
-        orderItemDao.addList(orderItems);
-
-//      create error after part 2
-//        int error = 10 / 0;
+        try {
+//          this method includes transaction
+            orderItemDao.addList(orderItems);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return OrderStatus.ORDER_ALL_OK;
     }

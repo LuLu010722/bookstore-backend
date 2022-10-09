@@ -5,7 +5,6 @@ import com.bookstore.backend.entity.User;
 import com.bookstore.backend.service.TimerService;
 import com.bookstore.backend.service.UserService;
 import lombok.Data;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -25,10 +24,8 @@ public class UserController {
 
     @PostMapping("/login")
     public UserServiceResponse userLogin(@RequestBody UserLoginRequest userLoginRequest) {
-        System.out.println(this);
 
         TimerService timerService = webApplicationContext.getBean(TimerService.class);
-        System.out.println(timerService);
         timerService.start();
 
         String username = userLoginRequest.getUsername();
