@@ -2,11 +2,12 @@ package com.bookstore.backend.service;
 
 import com.bookstore.backend.constant.UserServiceResponse;
 import com.bookstore.backend.entity.User;
+import org.springframework.data.util.Pair;
 
 import java.util.List;
 
 public interface UserService {
-    UserServiceResponse login(String username, String password);
+    Pair<UserServiceResponse, Long> login(String username, String password);
 
     void logout();
 

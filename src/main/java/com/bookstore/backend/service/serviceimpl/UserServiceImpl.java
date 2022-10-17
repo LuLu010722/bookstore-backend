@@ -4,11 +4,10 @@ import com.bookstore.backend.constant.UserServiceResponse;
 import com.bookstore.backend.constant.UserType;
 import com.bookstore.backend.dao.UserDao;
 import com.bookstore.backend.entity.User;
-import com.bookstore.backend.service.TimerService;
 import com.bookstore.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Scope;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,29 +23,29 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    public UserServiceResponse login(String username, String password) {
-        System.out.println(this);
+    public Pair<UserServiceResponse, Long> login(String username, String password) {
         log.info("logging in");
+
 
         if (username == null) {
             log.warn("login failed: username can't be blank!");
-            return UserServiceResponse.LOGIN_USERNAME_INVALID;
+            return Pair.of(UserServiceResponse.LOGIN_USERNAME_INVALID, null);
         }
 
         if (password == null) {
             log.warn("login failed: password can't be blank!");
-            return UserServiceResponse.LOGIN_PASSWORD_INVALID;
+            return Pair.of(UserServiceResponse.LOGIN_PASSWORD_INVALID, null);
         }
 
         User user = userDao.findByUsernameAndPassword(username, password);
         if (user == null) {
             log.warn("login failed: user not found!");
-            return UserServiceResponse.LOGIN_NOT_FOUND;
+            return Pair.of(UserServiceResponse.LOGIN_NOT_FOUND, null);
         }
 
         if (user.getUserType() == UserType.FORBIDDEN) {
             log.warn("login failed: user is forbidden");
-            return UserServiceResponse.LOGIN_FORBIDDEN;
+            return Pair.of(UserServiceResponse.LOGIN_FORBIDDEN, null);
         }
 
         createSession(user.getId(), user.getUserType());
@@ -54,10 +53,10 @@ public class UserServiceImpl implements UserService {
         log.info("login succeeded");
 
         if (user.getUserType() == UserType.ADMIN) {
-            return UserServiceResponse.LOGIN_ADMIN;
+            return Pair.of(UserServiceResponse.LOGIN_ADMIN, user.getId());
         }
 
-        return UserServiceResponse.LOGIN_CUSTOMER;
+        return Pair.of(UserServiceResponse.LOGIN_CUSTOMER, user.getId());
     }
 
     @Override

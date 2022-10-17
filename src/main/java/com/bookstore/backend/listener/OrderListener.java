@@ -1,6 +1,8 @@
 package com.bookstore.backend.listener;
 
 import com.bookstore.backend.service.OrderService;
+import com.bookstore.backend.websocket.Message;
+import com.bookstore.backend.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,6 +22,9 @@ public class OrderListener {
     @Resource
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    @Resource
+    private WebSocketServer webSocketServer;
+
     @KafkaListener(topics = "topic1", groupId = "group_topic_test")
     public void topic1Listener(ConsumerRecord<String, String> record) {
         int index = record.value().indexOf(']');
@@ -33,14 +38,16 @@ public class OrderListener {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        Message message = new Message();
+        message.setCode(200);
+        message.setText("订单创建完成");
 
-        kafkaTemplate.send("topic2", "key", "Done");
-    }
-
-    @KafkaListener(topics = "topic2", groupId = "group_topic_test")
-    public void topic2Listener(ConsumerRecord<String, String> record) {
-        String value = record.value();
-        log.info(value);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        webSocketServer.send(userId, message);
     }
 
 }
