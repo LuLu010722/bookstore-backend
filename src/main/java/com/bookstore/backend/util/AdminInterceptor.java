@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static com.bookstore.backend.util.SessionUtil.getUserType;
-
 @Component
 @Slf4j
 public class AdminInterceptor implements HandlerInterceptor {
