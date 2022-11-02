@@ -11,7 +11,7 @@ import javax.websocket.EndpointConfig;
 @Slf4j
 public class MessageEncoder implements Encoder.Text<Message> {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public String encode(Message message) throws EncodeException {

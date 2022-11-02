@@ -4,8 +4,6 @@ import com.bookstore.backend.dao.OrderDao;
 import com.bookstore.backend.entity.Order;
 import com.bookstore.backend.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;

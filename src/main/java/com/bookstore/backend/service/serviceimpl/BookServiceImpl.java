@@ -5,7 +5,6 @@ import com.bookstore.backend.entity.Book;
 import com.bookstore.backend.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -34,6 +33,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-         bookDao.deleteById(id);
+        bookDao.deleteById(id);
     }
 }

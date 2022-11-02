@@ -21,7 +21,8 @@ public class CommonInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
 //        log.info("处理请求完成，请求URI为：" + request.getRequestURI());
 
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
