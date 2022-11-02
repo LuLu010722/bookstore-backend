@@ -1,5 +1,7 @@
-package com.bookstore.backend.util;
+package com.bookstore.backend.config;
 
+import com.bookstore.backend.util.AdminInterceptor;
+import com.bookstore.backend.util.CommonInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

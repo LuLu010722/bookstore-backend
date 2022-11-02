@@ -14,3 +14,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+server:
+  port: 8443
+  ssl:
+    key-store: lulu.keystore
+    #    key-password?! 是错的！
+    key-store-password: LTY010722
+    key-store-type: PKCS12
+    key-alias: lulu
